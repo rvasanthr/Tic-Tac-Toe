@@ -18,7 +18,7 @@ def update_position(a_list, index, player): #input index: 0, 1, 2, 3, 4, 5, 6, 7
     return a_list
 
 def game_logic(some_list): #Game logic #returns winner 
-    '''This checks for winning conditions for Player X or Player Y by matching three contiguous 'X' or 'O' placeholders in the horizontal, vertical and diagonal axes.''' 
+    '''This checks for winning conditions for Player X or Player O by matching three contiguous 'X' or 'O' placeholders in the horizontal, vertical and diagonal axes.''' 
     for i in range(0,9,3): #Horizontal comparision, 3 iterations
         if some_list[i] == some_list[i+1] == some_list[i+2]:
             return some_list[i]    
