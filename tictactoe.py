@@ -18,7 +18,7 @@ def update_position(a_list, index, player): #input index: 0, 1, 2, 3, 4, 5, 6, 7
     return a_list
 
 def game_logic(some_list): #Game logic #returns winner 
-    '''This checks for winning conditions for Player X or Player Y by matching three contiguous 'X' or 'Y' placeholders in the horizontal, vertical and diagonal axes.''' 
+    '''This checks for winning conditions for Player X or Player Y by matching three contiguous 'X' or 'O' placeholders in the horizontal, vertical and diagonal axes.''' 
     for i in range(0,9,3): #Horizontal comparision, 3 iterations
         if some_list[i] == some_list[i+1] == some_list[i+2]:
             return some_list[i]    
@@ -64,7 +64,7 @@ def main(game_list):
             else: #single digit or character is entered, i.e length == 1                
                 if user_input in ('1', '2', '3', '4', '5', '6', '7', '8', '9'):                    
                     index = index_dictionary[int(user_input)]
-                    if game_list[index] == 'X' or game_list[index] == 'Y': #if user placeholder is present, don't allow change!; comparision between int and string                        
+                    if game_list[index] == 'X' or game_list[index] == 'O': #if user placeholder is present, don't allow change!; comparision between int and string                        
                         message = "You cannot alter a preselected position. Please choose again"
                         break
                     else:
@@ -77,7 +77,7 @@ def main(game_list):
                         elif not winner == None:                            
                             return winner #Exits loop
                         else:
-                            player = ('Y' if player == 'X' else 'X') #Ternary Operator                            
+                            player = ('O' if player == 'X' else 'X') #Ternary Operator                            
                             break #All good, break out of inner loop                               
                 else:                    
                     message = 'Please enter a number in the range of 1 to 9.'
