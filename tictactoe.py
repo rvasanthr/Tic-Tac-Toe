@@ -3,11 +3,13 @@ import os
 display_dictionary = {1:7, 2:8, 3:9, 4:4, 5:5, 6:6, 7:1, 8:2, 9:3} #list_index and keyboard pad mapping
 the_list = [display_dictionary[x] for x in range(1, 10)] #Generator list generation something
 index_dictionary = {7:0, 8:1, 9:2, 4:3, 5:4, 6:5, 1:6, 2:7, 3:8} #index pad and keyboard pad mapping
+symbols = {'p1':'', 'p2':''} #Symbol choices
+players = {'p1': '', 'p2': ''} #Names
 
-def the_board(our_list, message):
+def the_board(our_list):
     '''This function replicates the TicTacToe board and displays the key/player placeholders on the board.'''
     os.system('cls' if os.name == 'nt' else 'clear') #clears terminal, cross platform
-    print('Tic Tac Toe:',message)
+    print('Tic Tac Toe:')
     print(f" {our_list[0]} | {our_list[1]} | {our_list[2]} ")
     print(f" {our_list[3]} | {our_list[4]} | {our_list[5]} ")
     print(f" {our_list[6]} | {our_list[7]} | {our_list[8]} ")
@@ -46,14 +48,36 @@ def stalemate(game):
     else:
         return False
 
-def main(game_list): 
+def player_symbol_pairing():    
+    global players, symbols
+    counter = 1
+    name = ''
+    symbol = ''
+    for each in players: #Setting names 
+        while name == '': #Won't allow empty strings
+            name = input(f'Enter your name player{counter}: ')
+            if len(name) > 0:
+                players[each] = name
+                name = ''
+                break
+        counter += 1        
+    while not symbol in ('1','2'): #Choosing symbols
+        symbol = input(f'Enter your choice of symbol, player {players["p1"]} among "X" and "O". Enter "1" for "X" or enter "2" for "O": ')
+        symbols['p1'] = 'X' if symbol == 1 else 'O'
+        symbols['p2'] = 'O' if symbols['p1'] == 'X' else 'X'    
+    for each in players: #Output
+        print(f'{players[each]} is assigned symbol \'{symbols[each]}\'')
+    return f'{players["p1"]}\'s symbol is {symbols["p1"]}.\n{players["p2"]}\'s symbol is {symbols["p2"]}.\nGood luck! Let the game begin.'
+
+
+def main(game_list, message): 
     '''The main method to run all the functions.'''       
-    player = 'X'
-    winner = None
-    message = ''
+    person = 'p1'
+    winner = None    
     while winner == None: #Outer while        
-        the_board(game_list, message)
-        user_input = input(f"Player {player} enter choose the position: ")
+        the_board(game_list)
+        print(message)
+        user_input = input(f"Player {players[person]} enter the position you wish to mark: ")
         while not user_input == '': #Inner while
             message = '' #reseting message
             if len(user_input) > 1:                
@@ -68,27 +92,40 @@ def main(game_list):
                         message = "You cannot alter a preselected position. Please choose again"
                         break
                     else:
-                        game_list = update_position(game_list, index, player) #Updating position                                                                   
+                        game_list = update_position(game_list, index, symbols[person]) #Updating position                                                                   
                         winner = game_logic(game_list) #CHECK FOR WINNER (is None if no winner is preset)                       
-                        the_board(game_list, message)
+                        the_board(game_list)
 
                         if stalemate(game_list): #True                            
                             return 'stale'
                         elif not winner == None:                            
                             return winner #Exits loop
                         else:
-                            player = ('O' if player == 'X' else 'X') #Ternary Operator                            
+                            person = ('p2' if person == 'p1' else 'p1') #Ternary Operator                            
                             break #All good, break out of inner loop                               
                 else:                    
                     message = 'Please enter a number in the range of 1 to 9.'
                     break #break out of inner loop                                               
 
 if __name__ == "__main__": #Executes only if this is the main module
-    returned = main(the_list)
-    if returned == 'stale':
-        print('No win situation. Start Over!')
-    else:
-        print(f'Player \'{returned}\' won! Game Over.')
+    gaming = 'y'
+    message = player_symbol_pairing() #player name and symbol choosing
+    while gaming == 'y':
+        returned = main(the_list, message) #Stale or None or X or O
+        if returned == 'stale':
+            print('No win situation. Start Over!')
+        else:
+            if returned == symbols['p1']:
+                    champion = players['p1']
+            else:
+                champion = players['p2']
+            #selective code for player who won
+            print(f'Player \'{champion}\' won! Game Over.')
+            gaming = '' #reset gaming
+            while not gaming in ('y', 'n'):
+                gaming = input("Do you want to continue gaming (press y(yes) / n(no))? ").lower()
+            print("Good bye. Have a good day.")
+
 
 #Visual Aid
 #index              #list comprehension             #keyboard value
@@ -110,3 +147,8 @@ if __name__ == "__main__": #Executes only if this is the main module
 #User Input and related    
     #Get input alternating between the players ===> DONE
         #X for one player and Y for one player, has to alternate ===> DONE
+    
+#Add-on tasks: Completed
+    #Players get to enter names
+    #first player gets to choose symbol, either x or o
+    #Allow players to continue game
