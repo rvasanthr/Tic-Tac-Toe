@@ -72,17 +72,17 @@ def player_symbol_pairing():
     return f'{players["p1"]}\'s symbol is {symbols["p1"]}.\n{players["p2"]}\'s symbol is {symbols["p2"]}.\nGood luck! Let the game begin.'
 
 
-def main(game_list, message): 
+def main(game_list, message): #Sanitize this function, make it a collection of parts not hardwired worthless program
     '''The main method to run all the functions.'''       
     person = 'p1'
     winner = None    
-    while winner == None: #Outer while        
+    while winner == None: #Outer while - controls the game, runns as long as there is no winner or no stale game   
         the_board(game_list)
-        print(message)
+        print(message) #Displays any warning messages, if any
         user_input = input(f"Player {players[person]} enter the position you wish to mark: ")
-        while not user_input == '': #Inner while
+        while not user_input == '': #Inner while, position input and related tasks, as long as user input is not an empty string, it will prompt
             message = '' #reseting message
-            if len(user_input) > 1:                
+            if len(user_input) > 1: #If length of input is more than 1
                 if user_input[0] in '-+': #Catching the signs
                     message = "Please don't use signs. "                
                 message += f'You entered {user_input}. Please enter a number in the range starting from 1 and ending at 9.'
@@ -126,10 +126,8 @@ if __name__ == "__main__": #Executes only if this is the main module
             print(f'Player \'{champion}\' won! Game Over.')
         gaming = '' #reset gaming
         while not gaming in ('y', 'n'):
-            # the_list = set_board_list() #reset board
             gaming = input("Do you want to continue gaming (press y(yes) / n(no))? ").lower()
     print("Good bye. Have a good day.")
-
 
 #Visual Aid
 #index              #list comprehension             #keyboard value
@@ -161,3 +159,7 @@ if __name__ == "__main__": #Executes only if this is the main module
     #Wrong symbol assigned to player 1 fixed
 	#After tie game, lack of message regarding same and game starts by itself issue fixed
 	#Board reset issue because of underlying functionality fixed
+
+#Add-on task: to execute:
+    #Make this more streamlined, like a true oop program. 
+        #Sanitize the main() function by delegating many small parts to existing functions or new ones. 
