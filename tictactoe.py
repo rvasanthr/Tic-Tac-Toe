@@ -1,10 +1,12 @@
 import os
 
 display_dictionary = {1:7, 2:8, 3:9, 4:4, 5:5, 6:6, 7:1, 8:2, 9:3} #list_index and keyboard pad mapping
-the_list = [display_dictionary[x] for x in range(1, 10)] #Generator list generation something
 index_dictionary = {7:0, 8:1, 9:2, 4:3, 5:4, 6:5, 1:6, 2:7, 3:8} #index pad and keyboard pad mapping
 symbols = {'p1':'', 'p2':''} #Symbol choices
 players = {'p1': '', 'p2': ''} #Names
+
+def set_board_list():
+    return [display_dictionary[x] for x in range(1, 10)] #Board's list generation through list comprehension, returns a list
 
 def the_board(our_list):
     '''This function replicates the TicTacToe board and displays the key/player placeholders on the board.'''
@@ -63,7 +65,7 @@ def player_symbol_pairing():
         counter += 1        
     while not symbol in ('1','2'): #Choosing symbols
         symbol = input(f'Enter your choice of symbol, player {players["p1"]} among "X" and "O". Enter "1" for "X" or enter "2" for "O": ')
-        symbols['p1'] = 'X' if symbol == 1 else 'O'
+        symbols['p1'] = 'X' if symbol == '1' else 'O'
         symbols['p2'] = 'O' if symbols['p1'] == 'X' else 'X'    
     for each in players: #Output
         print(f'{players[each]} is assigned symbol \'{symbols[each]}\'')
@@ -109,11 +111,12 @@ def main(game_list, message):
 
 if __name__ == "__main__": #Executes only if this is the main module
     gaming = 'y'
-    message = player_symbol_pairing() #player name and symbol choosing
+    message = player_symbol_pairing() #player name and symbol choosing    
     while gaming == 'y':
+        the_list = set_board_list()
         returned = main(the_list, message) #Stale or None or X or O
         if returned == 'stale':
-            print('No win situation. Start Over!')
+            print('No win situation. Start Over!')            
         else:
             if returned == symbols['p1']:
                     champion = players['p1']
@@ -121,10 +124,11 @@ if __name__ == "__main__": #Executes only if this is the main module
                 champion = players['p2']
             #selective code for player who won
             print(f'Player \'{champion}\' won! Game Over.')
-            gaming = '' #reset gaming
-            while not gaming in ('y', 'n'):
-                gaming = input("Do you want to continue gaming (press y(yes) / n(no))? ").lower()
-            print("Good bye. Have a good day.")
+        gaming = '' #reset gaming
+        while not gaming in ('y', 'n'):
+            # the_list = set_board_list() #reset board
+            gaming = input("Do you want to continue gaming (press y(yes) / n(no))? ").lower()
+    print("Good bye. Have a good day.")
 
 
 #Visual Aid
@@ -152,3 +156,8 @@ if __name__ == "__main__": #Executes only if this is the main module
     #Players get to enter names
     #first player gets to choose symbol, either x or o
     #Allow players to continue game
+
+#Bug Fixes: Completed
+    #Wrong symbol assigned to player 1 fixed
+	#After tie game, lack of message regarding same and game starts by itself issue fixed
+	#Board reset issue because of underlying functionality fixed
