@@ -143,7 +143,7 @@ if __name__ == "__main__": #Executes only if this is the main module
         #Get input and display in position ===> DONE
         #Don't allow overwriting of data ===> DONE
     #Clear output
-    #Stalemate decleration
+    #Stalemate declaration
 #Game logic
 #Input update
 #User Input and related    
