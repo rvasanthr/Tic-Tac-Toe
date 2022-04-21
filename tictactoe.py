@@ -64,8 +64,8 @@ def player_symbol_pairing():
                 break
         counter += 1        
     while not symbol in ('1','2'): #Choosing symbols
-        symbol = input(f'Enter your choice of symbol, player {players["p1"]} among "X" and "O". Enter "1" for "X" or enter "2" for "O": ')
-        symbols['p1'] = 'X' if symbol == '1' else 'O'
+        symbol = input(f'Player {players["p1"]}, enter your choice of symbol among "X" and "O". Enter "1" for "X" or enter "2" for "O": ')
+        symbols['p1'] = 'X' if symbol == '1' else 'O' #It's either 1 or 2
         symbols['p2'] = 'O' if symbols['p1'] == 'X' else 'X'    
     for each in players: #Output
         print(f'{players[each]} is assigned symbol \'{symbols[each]}\'')
