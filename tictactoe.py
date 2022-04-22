@@ -6,6 +6,7 @@ symbols = {'p1':'', 'p2':''} #Symbol choices
 players = {'p1': '', 'p2': ''} #Names
 
 def set_board_list():
+    '''This sets the board in it's defalut position. Like at the beginning of the game. With no symbols placed on it. '''
     return [display_dictionary[x] for x in range(1, 10)] #Board's list generation through list comprehension, returns a list
 
 def the_board(our_list):
@@ -67,10 +68,7 @@ def player_symbol_pairing():
         symbol = input(f'Player {players["p1"]}, enter your choice of symbol among "X" and "O". Enter "1" for "X" or enter "2" for "O": ')
         symbols['p1'] = 'X' if symbol == '1' else 'O' #It's either 1 or 2
         symbols['p2'] = 'O' if symbols['p1'] == 'X' else 'X'    
-    for each in players: #Output
-        print(f'{players[each]} is assigned symbol \'{symbols[each]}\'')
     return f'{players["p1"]}\'s symbol is {symbols["p1"]}.\n{players["p2"]}\'s symbol is {symbols["p2"]}.\nGood luck! Let the game begin.'
-
 
 def main(game_list, message): #Sanitize this function, make it a collection of parts not hardwired worthless program
     '''The main method to run all the functions.'''       
@@ -91,7 +89,7 @@ def main(game_list, message): #Sanitize this function, make it a collection of p
                 if user_input in ('1', '2', '3', '4', '5', '6', '7', '8', '9'):                    
                     index = index_dictionary[int(user_input)]
                     if game_list[index] == 'X' or game_list[index] == 'O': #if user placeholder is present, don't allow change!; comparision between int and string                        
-                        message = "You cannot alter a preselected position. Please choose again"
+                        message = "Marking an occupied cell on the board is not allowed. Please, choose a different cell to mark your symbol."
                         break
                     else:
                         game_list = update_position(game_list, index, symbols[person]) #Updating position                                                                   
@@ -103,7 +101,7 @@ def main(game_list, message): #Sanitize this function, make it a collection of p
                         elif not winner == None:                            
                             return winner #Exits loop
                         else:
-                            person = ('p2' if person == 'p1' else 'p1') #Ternary Operator                            
+                            person = ('p2' if person == 'p1' else 'p1') #Ternary Operator, using it to switch between players                         
                             break #All good, break out of inner loop                               
                 else:                    
                     message = 'Please enter a number in the range of 1 to 9.'
@@ -163,3 +161,15 @@ if __name__ == "__main__": #Executes only if this is the main module
 #Add-on task: to execute:
     #Make this more streamlined, like a true oop program. 
         #Sanitize the main() function by delegating many small parts to existing functions or new ones. 
+        #Lastly, remove the dictionary mapping and apply the list method
+
+#Improvements
+    #Display messages were optimized with better structure to provide clearer meaning to context.
+    #Out of purpose statements removed.
+
+#Currently Working
+    #Make clear cogs out of the methods
+    # Simplify main()      
+    # Optimized functions
+        #set_board_list
+        #the_board
